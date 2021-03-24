@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;1,100;1,200;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>dev.finance$</title>
+</head>
+
+<body>
+    <header>
+        <img src="./assets/assets/logo.svg" alt="Logo Dev Fiance">
+    </header>
+
+    <div id="usuario">
+
+
+        <form>
+
+            <button id="Google"> <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google"
+                    class="svg-inline--fa fa-google fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 488 512">
+                    <path fill="currentColor"
+                        d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z">
+                    </path>
+                </svg> Entrar com o Google</button>
+
+        </form>
+    </div>
+
+
+
+
+    <main class="container" active>
+        <section id="balance">
+            <h2 class="sr-only">Balanço</h2>
+
+            <div class="card">
+                <h3>
+                    <span>
+                        Entradas
+                    </span>
+                    <img src="./assets/assets/income.svg" alt="imagem de entradas">
+                </h3>
+                <p id="incomeDisplay">R$ 0,00</p>
+            </div>
+
+            <div class="card">
+                <h3>
+                    <span>
+                        Saídas
+                    </span>
+                    <img src="./assets/assets/expense.svg" alt="imagem de Saídas">
+                </h3>
+                <p id="expenseDisplay">R$ 0,00</p>
+            </div>
+
+            <div class="card total">
+                <h3>
+                    <span>
+                        Total
+                    </span>
+                    <img src="./assets/assets/total.svg" alt="imagem do Total">
+                </h3>
+                <p id="totalDisplay">R$ 0,00</p>
+            </div>
+        </section>
+
+        <section id="transaction">
+            <h2 class="sr-only">Transações</h2>
+
+            <a href="#" onclick="Modal.open()" class="button new">+ Nova transação</a>
+
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Data</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="form">
+                <h2>Nova Transação</h2>
+                <form action="" onsubmit="Form.submit(event)">
+                    <div class="input-group">
+                        <label class="sr-only" for="description">Descrição</label>
+                        <input type="text" id="description" name="description" placeholder="Descrição" />
+                    </div>
+                    <div class="input-group">
+                        <label class="sr-only" for="amount">Valor</label>
+                        <input type="number" id="amount" name="amount" step="0.01" placeholder="0,00">
+                        <small class="help">
+                            Use sinal - (negativo) para despesas , (vírgula) para casas decimais
+                        </small>
+                        <div class="input-group">
+                            <label class="sr-only" for="data">Descrição</label>
+                            <input type="date" id="date" name="data">
+                        </div>
+                        <div class="input-group actions">
+                            <a href="#" onclick="Modal.close()" class="button cancel">Cancelar</a>
+                            <button>Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>dev.finance$</p>
+    </footer>
+
+    <script src="./scripts.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"> </script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyAMFrG8li76dFf9hgcBOLO2khDjMNAqXh8",
+            authDomain: "dev-finance-d41c0.firebaseapp.com",
+            projectId: "dev-finance-d41c0",
+            storageBucket: "dev-finance-d41c0.appspot.com",
+            messagingSenderId: "189382250851",
+            appId: "1:189382250851:web:faa600890231f99f7a0356",
+            measurementId: "G-B0S3J9NJ77"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        
+        const Google= document.querySelector("#Google")
+        Google.addEventListener("click", function() {
+            firebase.auth()
+            .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+            .then((result) => {
+                document.querySelector(".container").style.display = "block";
+            }).catch((error) => {
+               alert('ocorreu um erro');
+            }); 
+        })
+    </script>
+</body>
+
+</html>
